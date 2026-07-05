@@ -1,7 +1,6 @@
 package com.spring.ai.ollama;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +13,9 @@ public class ChatController {
     private final ChatClient ollamaChatClient;
     private final ChatClient geminiChatClient;
 
-    public ChatController(@Qualifier("ollamaChatModel") ChatModel ollamaChatModel, @Qualifier("googleGenAiChatModel") ChatModel geminiChatModel) {
-
-        this.ollamaChatClient = ChatClient.builder(ollamaChatModel).build();
-        this.geminiChatClient = ChatClient.builder(geminiChatModel).build();
+    public ChatController(@Qualifier("ollamaChatClient") ChatClient ollamaChatClient, @Qualifier("geminiChatClient") ChatClient geminiChatClient) {
+        this.ollamaChatClient = ollamaChatClient;
+        this.geminiChatClient = geminiChatClient;
     }
 
     @GetMapping("/ollama")
